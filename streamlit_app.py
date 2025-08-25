@@ -14,7 +14,7 @@ WEATHER_API_KEY = st.secrets["WEATHER_API_KEY"]
 GMAPS_API_KEY = st.secrets["GOOGLE_MAPS_API_KEY"]
 
 # Clients
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
 gmaps = googlemaps.Client(key=GMAPS_API_KEY)
 
 # ----------------------------
@@ -63,10 +63,11 @@ def generate_itinerary(city, days, interests, weather_forecast, poi_list):
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="deepseek-chat",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7,
-        max_tokens=700
+        max_tokens=700,
+        stream=False
     )
     return response.choices[0].message.content.strip()
 
